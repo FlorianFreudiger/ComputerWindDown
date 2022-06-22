@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerWindDown", "ComputerWindDown\ComputerWindDown.csproj", "{8A59DB1E-849E-4A8F-94C9-517C35D54A98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A59DB1E-849E-4A8F-94C9-517C35D54A98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A59DB1E-849E-4A8F-94C9-517C35D54A98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A59DB1E-849E-4A8F-94C9-517C35D54A98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A59DB1E-849E-4A8F-94C9-517C35D54A98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {505942D9-0BDE-4E66-BF93-61A8D14C84C8}
+	EndGlobalSection
+EndGlobal
