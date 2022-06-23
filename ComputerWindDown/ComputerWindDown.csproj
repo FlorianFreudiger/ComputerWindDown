@@ -28,4 +28,9 @@
     <PackageReference Include="NvAPIWrapper.Net" Version="0.8.1.101" />
     <PackageReference Include="XamlNameReferenceGenerator" Version="1.3.4" />
   </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
 </Project>
