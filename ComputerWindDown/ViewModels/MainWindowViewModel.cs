@@ -6,6 +6,11 @@ namespace ComputerWindDown.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Greeting => "Welcome to Avalonia!";
+        public PreferencesViewModel Preferences { get; }
+
+        public MainWindowViewModel(PreferencesViewModel preferencesViewModel)
+        {
+            Preferences = preferencesViewModel;
+        }
     }
 }

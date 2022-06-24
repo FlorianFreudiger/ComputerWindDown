@@ -17,9 +17,10 @@ namespace ComputerWindDown
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
+                var preferencesViewModel = new PreferencesViewModel();
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = new MainWindowViewModel(),
+                    DataContext = new MainWindowViewModel(preferencesViewModel),
                 };
             }
 
