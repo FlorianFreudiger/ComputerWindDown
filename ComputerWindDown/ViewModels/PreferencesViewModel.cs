@@ -6,6 +6,16 @@ namespace ComputerWindDown.ViewModels
 {
     public class PreferencesViewModel : ViewModelBase
     {
+        public bool Enable
+        {
+            get => Settings.Default.Enable;
+            set
+            {
+                Settings.Default.Enable = value;
+                Settings.Default.Save();
+                this.RaisePropertyChanged(nameof(Enable));
+            }
+        }
         public TimeSpan TransitionStart
         {
             get => Settings.Default.TransitionStart;

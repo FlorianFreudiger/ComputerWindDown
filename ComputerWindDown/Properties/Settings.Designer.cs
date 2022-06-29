@@ -25,6 +25,18 @@ namespace ComputerWindDown.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Enable {
+            get {
+                return ((bool)(this["Enable"]));
+            }
+            set {
+                this["Enable"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("23:00:00")]
         public global::System.TimeSpan TransitionStart {
             get {
