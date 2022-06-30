@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ComputerWindDown.Models.Grayscale;
+using ComputerWindDown.Models.Time;
 using ComputerWindDown.ViewModels;
 using ComputerWindDown.Views;
 
@@ -18,7 +19,8 @@ namespace ComputerWindDown
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                new NvidiaDigitalVibranceTransition();
+                Coordinator coordinator = new Coordinator();
+                new NvidiaDigitalVibranceTransition(coordinator);
                 var preferencesViewModel = new PreferencesViewModel();
                 desktop.MainWindow = new MainWindow
                 {

@@ -1,10 +1,11 @@
-﻿using NvAPIWrapper.Display;
+﻿using ComputerWindDown.Models.Time;
+using NvAPIWrapper.Display;
 
 namespace ComputerWindDown.Models.Grayscale
 {
     internal class NvidiaDigitalVibranceTransition : GrayscaleTransition
     {
-        public NvidiaDigitalVibranceTransition()
+        public NvidiaDigitalVibranceTransition(Coordinator coordinator) : base(coordinator)
         {
             NvAPIWrapper.NVIDIA.Initialize();
         }
