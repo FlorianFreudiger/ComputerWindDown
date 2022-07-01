@@ -1,12 +1,17 @@
-﻿using System;
+﻿using ComputerWindDown.Properties;
+using Quartz;
+using Quartz.Impl;
+using System;
 using System.Reactive.Subjects;
-using ComputerWindDown.Properties;
+using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models.Time
 {
     internal class Coordinator
     {
         public Subject<double> TransitionProgress;
+
+        private IScheduler? _scheduler;
 
         public Coordinator()
         {
@@ -16,24 +21,38 @@ namespace ComputerWindDown.Models.Time
 
         private void SettingsChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Update();
+            _ = Run();
         }
 
-        public void Update()
+        public virtual async Task Run()
         {
-            TimeSpan start = Settings.Default.TransitionStart;
-            TimeSpan end = Settings.Default.TransitionEnd;
-            TimeSpan now = DateTime.Now.TimeOfDay;
+            if (_scheduler == null)
+            {
+                ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
+                _scheduler = await schedulerFactory.GetScheduler();
+            }
 
-            double ratio = TimeHelper.TimeOfDayRangeProgression(now, start, end);
-            if (ratio > 0)
-            {
-                TransitionProgress.OnNext(ratio);
-            }
-            else
-            {
-                TransitionProgress.OnNext(0.0);
-            }
+            await _scheduler.Clear();
+
+            // Create empty job
+            IJobDetail job = JobBuilder.Create<UpdateJob>()
+                .Build();
+
+            ISimpleTrigger trigger = (ISimpleTrigger)TriggerBuilder.Create()
+                .WithSimpleSchedule(x => x
+                    .WithIntervalInSeconds(30)
+                    .RepeatForever()
+                )
+                .StartNow()
+                .Build();
+
+            DateTimeOffset? ft = await _scheduler.ScheduleJob(job, trigger);
+
+            // Listen for job executions
+            IJobListener updateJobListener = new UpdateJobListener(this);
+            _scheduler.ListenerManager.AddJobListener(updateJobListener);
+
+            await _scheduler.Start();
         }
     }
 }
