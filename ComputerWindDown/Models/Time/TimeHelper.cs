@@ -53,5 +53,19 @@ namespace ComputerWindDown.Models.Time
             Debug.Assert(IsTimeOfDayBetween(targetTime, startTime, endTime));
             return ratio;
         }
+
+        public static DateTime NextUtcDateWithLocalTimeOfDay(TimeSpan localTimeOfDay)
+        {
+            DateTime date = DateTime.Now.Date;
+            date += localTimeOfDay;
+
+            if (date < DateTime.Now)
+            {
+                date = date.AddDays(1);
+            }
+            Debug.Assert(date >= DateTime.Now);
+
+            return date.ToUniversalTime();
+        }
     }
 }
