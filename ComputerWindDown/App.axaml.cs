@@ -19,6 +19,8 @@ namespace ComputerWindDown
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 WindDown windDown = new WindDown();
+                _ = windDown.Initialize();
+
                 var preferencesViewModel = new PreferencesViewModel();
                 desktop.MainWindow = new MainWindow
                 {

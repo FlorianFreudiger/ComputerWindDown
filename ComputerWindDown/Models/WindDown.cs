@@ -1,8 +1,10 @@
 ﻿using ComputerWindDown.Models.Grayscale;
 using ComputerWindDown.Models.State;
 using Quartz;
+using Quartz.Impl;
 using System.Diagnostics;
 using System.Reactive.Subjects;
+using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models
 {
@@ -36,6 +38,18 @@ namespace ComputerWindDown.Models
             
             GrayscaleTransition = new NvidiaDigitalVibranceTransition(this);
             StateManager = new StateManager(this);
+        }
+
+        public async Task Initialize()
+        {
+            // 1. Setup scheduler
+            ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
+            Scheduler = await schedulerFactory.GetScheduler();
+
+            await Scheduler.Start();
+
+            // 2. Initialize StateManager, starting state execution
+            StateManager.Initialize();
         }
     }
 }

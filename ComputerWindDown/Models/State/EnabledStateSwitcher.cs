@@ -38,11 +38,12 @@ namespace ComputerWindDown.Models.State
         {
             IScheduler scheduler = stateManager.WindDown.Scheduler;
 
-            // Assert this hasn't already been setup for this scheduler
+            // Ensure this hasn't already been setup for this scheduler
             try
             {
                 scheduler.ListenerManager.GetJobListener(nameof(SwitchEnabledStateJobListener));
-                Debug.Assert(false);
+
+                throw new InvalidOperationException("StateManager already has job listener registered");
             }
             catch (KeyNotFoundException) { }
 

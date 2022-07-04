@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using ComputerWindDown.Models.State.States;
+﻿using ComputerWindDown.Models.State.States;
+using System.Diagnostics;
 
 namespace ComputerWindDown.Models.State
 {
@@ -13,8 +13,14 @@ namespace ComputerWindDown.Models.State
         {
             WindDown = windDown;
             CurrentState = new StartupState(this);
+        }
 
-            // StartupState will initialize WindDown scheduler, EnabledStateSwitcher, etc
+        public void Initialize()
+        {
+            EnabledStateSwitcher.Setup(this);
+
+            // StartupState will switch to first real state
+            Debug.Assert(CurrentState is StartupState);
             CurrentState.Activate(CurrentState);
         }
 
