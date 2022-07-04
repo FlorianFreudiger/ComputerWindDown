@@ -1,4 +1,5 @@
-﻿using ComputerWindDown.Models.State.States;
+﻿using System.Diagnostics;
+using ComputerWindDown.Models.State.States;
 
 namespace ComputerWindDown.Models.State
 {
@@ -12,6 +13,8 @@ namespace ComputerWindDown.Models.State
         {
             WindDown = windDown;
             CurrentState = new StartupState(this);
+
+            // StartupState will initialize WindDown scheduler, EnabledStateSwitcher, etc
             CurrentState.Activate(CurrentState);
         }
 
@@ -22,6 +25,8 @@ namespace ComputerWindDown.Models.State
 
             CurrentState = newState;
             newState.Activate(oldState);
+
+            Debug.WriteLine("Switched from " + oldState + " to " + newState);
         }
     }
 }

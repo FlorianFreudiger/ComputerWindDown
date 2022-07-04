@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using ComputerWindDown.Properties;
+﻿using ComputerWindDown.Properties;
 using Quartz;
 using Quartz.Impl;
+using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models.State.States
 {
@@ -20,9 +20,17 @@ namespace ComputerWindDown.Models.State.States
 
         private async Task Initialize()
         {
+            // 1. Setup scheduler
             ISchedulerFactory schedulerFactory = new StdSchedulerFactory();
-            StateManager.WindDown.Scheduler = await schedulerFactory.GetScheduler();
+            IScheduler scheduler = await schedulerFactory.GetScheduler();
+            StateManager.WindDown.Scheduler = scheduler;
 
+            EnabledStateSwitcher.Setup(StateManager);
+
+            await scheduler.Start();
+
+
+            // 2. Switch to first job
             WindDownState newState;
             if (!Settings.Default.Enable)
             {
@@ -30,7 +38,7 @@ namespace ComputerWindDown.Models.State.States
             }
             else
             {
-                newState = EnabledState.CreateEnabledState(StateManager);
+                newState = EnabledStateSwitcher.CreateNextState(StateManager);
             }
 
             StateManager.ChangeState(newState);

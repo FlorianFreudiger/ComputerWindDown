@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
-using ComputerWindDown.Models.Grayscale;
+﻿using ComputerWindDown.Models.Grayscale;
 using ComputerWindDown.Models.State;
 using ComputerWindDown.Models.Time;
 using Quartz;
+using System.Diagnostics;
 
 namespace ComputerWindDown.Models
 {
@@ -30,9 +30,9 @@ namespace ComputerWindDown.Models
 
         public WindDown()
         {
-            StateManager = new StateManager(this);
             Coordinator coordinator = new Coordinator();
             GrayscaleTransition = new NvidiaDigitalVibranceTransition(coordinator);
+            StateManager = new StateManager(this);
         }
     }
 }

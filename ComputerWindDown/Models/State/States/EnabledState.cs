@@ -1,5 +1,4 @@
-﻿using ComputerWindDown.Models.Time;
-using ComputerWindDown.Properties;
+﻿using Quartz;
 using System;
 
 namespace ComputerWindDown.Models.State.States
@@ -15,22 +14,20 @@ namespace ComputerWindDown.Models.State.States
             EndUtc = endUtc;
         }
 
-        public static EnabledState CreateEnabledState(StateManager stateManager)
+        public override void Activate(WindDownState previousState)
         {
-            TimeSpan start = Settings.Default.TransitionStart;
-            TimeSpan end = Settings.Default.TransitionEnd;
-            TimeSpan now = DateTime.Now.TimeOfDay;
+            base.Activate(previousState);
 
-            if (TimeHelper.IsTimeOfDayBetween(now, start, end))
-            {
-                DateTime endUtc = TimeHelper.NextUtcDateWithLocalTimeOfDay(end);
-                return new ActiveState(stateManager, endUtc);
-            }
-            else
-            {
-                DateTime endUtc = TimeHelper.NextUtcDateWithLocalTimeOfDay(start);
-                return new InactiveState(stateManager, endUtc);
-            }
+            IScheduler scheduler = StateManager.WindDown.Scheduler;
+            _ = EnabledStateSwitcher.ScheduleSwitch(scheduler, EndUtc);
+        }
+
+        public override void Deactivate(WindDownState newState)
+        {
+            base.Deactivate(newState);
+
+            IScheduler scheduler = StateManager.WindDown.Scheduler;
+            _ = EnabledStateSwitcher.CancelSwitch(scheduler);
         }
     }
 }
