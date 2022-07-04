@@ -5,7 +5,7 @@ namespace ComputerWindDown.Models.Grayscale
 {
     internal class NvidiaDigitalVibranceTransition : GrayscaleTransition
     {
-        public NvidiaDigitalVibranceTransition(Coordinator coordinator) : base(coordinator)
+        public NvidiaDigitalVibranceTransition(WindDown windDown) : base(windDown)
         {
             NvAPIWrapper.NVIDIA.Initialize();
         }

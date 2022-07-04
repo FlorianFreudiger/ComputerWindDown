@@ -1,13 +1,12 @@
 ﻿using System;
-using ComputerWindDown.Models.Time;
 
 namespace ComputerWindDown.Models.Grayscale
 {
     internal abstract class GrayscaleTransition
     {
-        public GrayscaleTransition(Coordinator coordinator)
+        public GrayscaleTransition(WindDown windDown)
         {
-            coordinator.TransitionProgress.Subscribe(d => SetTransition(d));
+            windDown.TransitionProgress.Subscribe(d => SetTransition(d));
         }
 
         public abstract void SetTransition(double progress);

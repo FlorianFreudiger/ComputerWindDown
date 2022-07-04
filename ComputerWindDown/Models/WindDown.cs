@@ -1,8 +1,8 @@
 ﻿using ComputerWindDown.Models.Grayscale;
 using ComputerWindDown.Models.State;
-using ComputerWindDown.Models.Time;
 using Quartz;
 using System.Diagnostics;
+using System.Reactive.Subjects;
 
 namespace ComputerWindDown.Models
 {
@@ -10,6 +10,8 @@ namespace ComputerWindDown.Models
     {
         public readonly StateManager StateManager;
         public readonly GrayscaleTransition GrayscaleTransition;
+
+        public Subject<double> TransitionProgress;
 
         private IScheduler? _scheduler;
         public IScheduler Scheduler
@@ -30,8 +32,9 @@ namespace ComputerWindDown.Models
 
         public WindDown()
         {
-            Coordinator coordinator = new Coordinator();
-            GrayscaleTransition = new NvidiaDigitalVibranceTransition(coordinator);
+            TransitionProgress = new Subject<double>();
+            
+            GrayscaleTransition = new NvidiaDigitalVibranceTransition(this);
             StateManager = new StateManager(this);
         }
     }
