@@ -1,4 +1,6 @@
 ﻿using ComputerWindDown.Models.State.States;
+using ComputerWindDown.Properties;
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace ComputerWindDown.Models.State
@@ -13,6 +15,20 @@ namespace ComputerWindDown.Models.State
         {
             WindDown = windDown;
             CurrentState = new StartupState(this);
+
+            Settings.Default.PropertyChanged += SettingsChanged;
+        }
+
+        private void SettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (Settings.Default.Enable)
+            {
+                ChangeState(EnabledStateSwitcher.CreateNextState(this));
+            }
+            else
+            {
+                ChangeState(new DisabledState(this));
+            }
         }
 
         public void Initialize()
