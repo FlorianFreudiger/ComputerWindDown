@@ -1,6 +1,4 @@
 ﻿using ComputerWindDown.Models.State.States;
-using ComputerWindDown.Models.Time;
-using ComputerWindDown.Properties;
 using Quartz;
 using Quartz.Impl.Matchers;
 using Quartz.Listener;
@@ -14,24 +12,6 @@ namespace ComputerWindDown.Models.State
 {
     internal static class EnabledStateSwitcher
     {
-        public static EnabledState CreateNextState(StateManager stateManager)
-        {
-            TimeSpan start = Settings.Default.TransitionStart;
-            TimeSpan end = Settings.Default.TransitionEnd;
-            TimeSpan now = DateTime.Now.TimeOfDay;
-
-            if (TimeHelper.IsTimeOfDayBetween(now, start, end))
-            {
-                DateTime endUtc = TimeHelper.NextUtcDateWithLocalTimeOfDay(end);
-                return new ActiveState(stateManager, endUtc);
-            }
-            else
-            {
-                DateTime endUtc = TimeHelper.NextUtcDateWithLocalTimeOfDay(start);
-                return new InactiveState(stateManager, endUtc);
-            }
-        }
-
         private static readonly JobKey SwitchJobKey = new(nameof(SwitchEnabledStateJob), nameof(EnabledStateSwitcher));
 
         public static void Setup(StateManager stateManager)
@@ -101,8 +81,8 @@ namespace ComputerWindDown.Models.State
             Debug.Assert(_stateManager.CurrentState is EnabledState);
 
             // Create and switch to new EnabledState
-            EnabledState newState = EnabledStateSwitcher.CreateNextState(_stateManager);
-            _stateManager.ChangeState(newState);
+            _stateManager.RefreshState();
+            Debug.Assert(_stateManager.CurrentState is EnabledState);
 
             return base.JobWasExecuted(context, jobException, cancellationToken);
         }

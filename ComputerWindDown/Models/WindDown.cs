@@ -1,5 +1,6 @@
 ﻿using ComputerWindDown.Models.Grayscale;
 using ComputerWindDown.Models.State;
+using ComputerWindDown.Models.Time;
 using Quartz;
 using Quartz.Impl;
 using System.Diagnostics;
@@ -32,12 +33,15 @@ namespace ComputerWindDown.Models
             }
         }
 
+        public IActivitySchedule ActivitySchedule;
+
         public WindDown()
         {
             TransitionProgress = new Subject<double>();
             
             GrayscaleTransition = new NvidiaDigitalVibranceTransition(this);
             StateManager = new StateManager(this);
+            ActivitySchedule = new SimpleActivitySchedule();
         }
 
         public async Task Initialize()

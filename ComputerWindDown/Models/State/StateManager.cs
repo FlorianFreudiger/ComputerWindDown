@@ -1,5 +1,6 @@
 ﻿using ComputerWindDown.Models.State.States;
 using ComputerWindDown.Properties;
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 
@@ -17,18 +18,6 @@ namespace ComputerWindDown.Models.State
             CurrentState = new StartupState(this);
 
             Settings.Default.PropertyChanged += SettingsChanged;
-        }
-
-        private void SettingsChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (Settings.Default.Enable)
-            {
-                ChangeState(EnabledStateSwitcher.CreateNextState(this));
-            }
-            else
-            {
-                ChangeState(new DisabledState(this));
-            }
         }
 
         public void Initialize()
@@ -49,6 +38,35 @@ namespace ComputerWindDown.Models.State
             newState.Activate(oldState);
 
             Debug.WriteLine("Switched from " + oldState + " to " + newState);
+        }
+
+        private void SettingsChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            RefreshState();
+        }
+
+        public void RefreshState()
+        {
+            ChangeState(CreateState());
+        }
+
+        private WindDownState CreateState()
+        {
+            if (!Settings.Default.Enable)
+            {
+                return new DisabledState(this);
+            }
+
+            DateTime now = DateTime.Now;
+            DateTime nextEndTimeUtc = WindDown.ActivitySchedule.GetNextSwitchTimeUtc();
+            if (WindDown.ActivitySchedule.IsActiveForTime(now, false))
+            {
+                return new ActiveState(this, nextEndTimeUtc);
+            }
+            else
+            {
+                return new InactiveState(this, nextEndTimeUtc);
+            }
         }
     }
 }

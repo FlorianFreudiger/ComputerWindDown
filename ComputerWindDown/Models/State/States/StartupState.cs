@@ -1,6 +1,4 @@
-﻿using ComputerWindDown.Properties;
-
-namespace ComputerWindDown.Models.State.States
+﻿namespace ComputerWindDown.Models.State.States
 {
     internal class StartupState : WindDownState
     {
@@ -13,17 +11,7 @@ namespace ComputerWindDown.Models.State.States
             base.Activate(previousState);
 
             // Switch to first real state
-            WindDownState newState;
-            if (!Settings.Default.Enable)
-            {
-                newState = new DisabledState(StateManager);
-            }
-            else
-            {
-                newState = EnabledStateSwitcher.CreateNextState(StateManager);
-            }
-
-            StateManager.ChangeState(newState);
+            StateManager.RefreshState();
         }
     }
 }
