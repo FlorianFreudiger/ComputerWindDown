@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ComputerWindDown.Models;
@@ -9,6 +10,11 @@ namespace ComputerWindDown
 {
     public partial class App : Application
     {
+        public App()
+        {
+            DataContext = new AppViewModel();
+        }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
