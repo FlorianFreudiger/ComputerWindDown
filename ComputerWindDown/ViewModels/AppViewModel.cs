@@ -7,7 +7,7 @@ namespace ComputerWindDown.ViewModels
 {
     internal class AppViewModel : ViewModelBase
     {
-        public static string Name => "Wind Down";
+        public string Name => "Wind Down";
 
         public AppViewModel()
         {

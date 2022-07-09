@@ -4,6 +4,7 @@
              xmlns:vm="clr-namespace:ComputerWindDown.ViewModels"
              x:DataType="vm:AppViewModel"
              x:Class="ComputerWindDown.App"
+             x:CompileBindings="True"
              Name="{Binding Name}">
     <Application.DataTemplates>
         <local:ViewLocator/>
