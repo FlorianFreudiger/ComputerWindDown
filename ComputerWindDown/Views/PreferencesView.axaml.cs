@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using ComputerWindDown.ViewModels;
 
 namespace ComputerWindDown.Views
 {
@@ -7,6 +8,8 @@ namespace ComputerWindDown.Views
         public PreferencesView()
         {
             InitializeComponent();
+
+            DataContext = new PreferencesViewModel();
         }
     }
 }
