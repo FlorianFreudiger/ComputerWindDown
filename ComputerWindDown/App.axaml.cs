@@ -27,14 +27,31 @@ namespace ComputerWindDown
                 WindDown windDown = new WindDown();
                 _ = windDown.Initialize();
 
-                var preferencesViewModel = new PreferencesViewModel();
-                desktop.MainWindow = new MainWindow
-                {
-                    DataContext = new MainWindowViewModel(preferencesViewModel),
-                };
+                desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             }
 
+            CreateOrShowMainWindow();
+
             base.OnFrameworkInitializationCompleted();
+        }
+
+        public static void CreateOrShowMainWindow()
+        {
+            if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                // Check if MainWindow hasn't been created or is closed
+                if (desktop.MainWindow?.PlatformImpl == null)
+                {
+                    var preferencesViewModel = new PreferencesViewModel();
+                    desktop.MainWindow = new MainWindow
+                    {
+                        DataContext = new MainWindowViewModel(preferencesViewModel),
+                    };
+                }
+
+                desktop.MainWindow.Show();
+                desktop.MainWindow.Activate();
+            }
         }
     }
 }

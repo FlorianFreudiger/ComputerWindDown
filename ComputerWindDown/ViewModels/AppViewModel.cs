@@ -12,6 +12,7 @@ namespace ComputerWindDown.ViewModels
         public AppViewModel()
         {
             ExitCommand = ReactiveCommand.Create(Exit);
+            ShowCommand = ReactiveCommand.Create(Show);
         }
 
         public ReactiveCommand<Unit, Unit> ExitCommand { get; }
@@ -21,6 +22,12 @@ namespace ComputerWindDown.ViewModels
             {
                 lifetime.TryShutdown();
             }
+        }
+
+        public ReactiveCommand<Unit, Unit> ShowCommand { get; }
+        public void Show()
+        {
+            App.CreateOrShowMainWindow();
         }
     }
 }
