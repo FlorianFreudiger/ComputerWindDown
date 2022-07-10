@@ -4,7 +4,7 @@ using System;
 
 namespace ComputerWindDown.ViewModels
 {
-    public class PreferencesViewModel : ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         public bool Enable
         {

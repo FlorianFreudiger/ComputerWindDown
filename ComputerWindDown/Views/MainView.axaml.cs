@@ -3,13 +3,13 @@ using ComputerWindDown.ViewModels;
 
 namespace ComputerWindDown.Views
 {
-    public partial class PreferencesView : UserControl
+    public partial class MainView : UserControl
     {
-        public PreferencesView()
+        public MainView()
         {
             InitializeComponent();
 
-            DataContext = new PreferencesViewModel();
+            DataContext = new MainViewModel();
         }
     }
 }
