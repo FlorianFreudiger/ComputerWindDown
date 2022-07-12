@@ -3,8 +3,24 @@
         xmlns:views="clr-namespace:ComputerWindDown.Views"
         x:Class="ComputerWindDown.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Width="300" Height="250"
-        Title="Computer Wind down">
+        Width="700" Height="400"
+        CanResize="False"
+        Title="Computer Wind down"
 
-    <views:MainView/>
+        TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent">
+
+    <Panel>
+        <ExperimentalAcrylicBorder IsHitTestVisible="False">
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial
+                    BackgroundSource="Digger"
+                    TintColor="Black"
+                    TintOpacity="1"
+                    MaterialOpacity="0.5" />
+            </ExperimentalAcrylicBorder.Material>
+        </ExperimentalAcrylicBorder>
+
+        <views:MainView/>
+    </Panel>
 </Window>
