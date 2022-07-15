@@ -2,9 +2,9 @@
 
 namespace ComputerWindDown.Models.ScreenEffects
 {
-    internal class NvidiaDigitalVibranceTransition : ScreenEffect
+    internal class NvidiaDigitalVibranceReduction : ScreenEffect
     {
-        public NvidiaDigitalVibranceTransition()
+        public NvidiaDigitalVibranceReduction()
         {
             NvAPIWrapper.NVIDIA.Initialize();
         }

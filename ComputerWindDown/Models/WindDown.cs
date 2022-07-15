@@ -34,7 +34,7 @@ namespace ComputerWindDown.Models
 
         public WindDown()
         {
-            ScreenEffect = new NvidiaDigitalVibranceTransition();
+            ScreenEffect = new NvidiaDigitalVibranceReduction();
             StateManager = new StateManager(this);
             ActivitySchedule = new SimpleActivitySchedule();
         }
