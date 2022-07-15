@@ -1,10 +1,9 @@
-﻿using ComputerWindDown.Models.Grayscale;
+﻿using ComputerWindDown.Models.ScreenEffects;
 using ComputerWindDown.Models.State;
 using ComputerWindDown.Models.Time;
 using Quartz;
 using Quartz.Impl;
 using System.Diagnostics;
-using System.Reactive.Subjects;
 using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models
@@ -12,9 +11,7 @@ namespace ComputerWindDown.Models
     internal class WindDown
     {
         public readonly StateManager StateManager;
-        public readonly GrayscaleTransition GrayscaleTransition;
-
-        public Subject<double> TransitionProgress;
+        public readonly ScreenEffect ScreenEffect;
 
         private IScheduler? _scheduler;
         public IScheduler Scheduler
@@ -37,9 +34,7 @@ namespace ComputerWindDown.Models
 
         public WindDown()
         {
-            TransitionProgress = new Subject<double>();
-            
-            GrayscaleTransition = new NvidiaDigitalVibranceTransition(this);
+            ScreenEffect = new NvidiaDigitalVibranceTransition();
             StateManager = new StateManager(this);
             ActivitySchedule = new SimpleActivitySchedule();
         }

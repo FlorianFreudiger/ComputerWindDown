@@ -12,7 +12,7 @@ namespace ComputerWindDown.Models.State.States
         {
             base.Activate(previousState);
 
-            StateManager.WindDown.GrayscaleTransition.SetTransition(1);
+            StateManager.WindDown.ScreenEffect.SetActive(true);
         }
 
         public override void Deactivate(WindDownState newState)
@@ -21,7 +21,7 @@ namespace ComputerWindDown.Models.State.States
 
             if (newState is not ActiveState)
             {
-                StateManager.WindDown.GrayscaleTransition.SetTransition(0);
+                StateManager.WindDown.ScreenEffect.SetActive(false);
             }
         }
     }
