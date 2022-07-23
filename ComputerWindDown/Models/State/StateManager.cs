@@ -12,12 +12,26 @@ namespace ComputerWindDown.Models.State
         public readonly WindDown WindDown;
         public readonly EnabledStateSwitcher EnabledStateSwitcher;
 
-        public WindDownState CurrentState;
+        private WindDownState _currentState;
+        public WindDownState CurrentState
+        {
+            get => _currentState;
+            set
+            {
+                WindDownState oldState = _currentState;
+
+                _currentState.Deactivate(value);
+                _currentState = value;
+                _currentState.Activate(oldState);
+
+                Debug.WriteLine("Switched from " + oldState + " to " + value);
+            }
+        }
 
         public StateManager(WindDown windDown)
         {
             WindDown = windDown;
-            CurrentState = new StartupState(this);
+            _currentState = new StartupState(this);
 
             Settings.Default.PropertyChanged += SettingsChanged;
 
@@ -33,17 +47,6 @@ namespace ComputerWindDown.Models.State
             CurrentState.Activate(CurrentState);
         }
 
-        public void ChangeState(WindDownState newState)
-        {
-            WindDownState oldState = CurrentState;
-            oldState.Deactivate(newState);
-
-            CurrentState = newState;
-            newState.Activate(oldState);
-
-            Debug.WriteLine("Switched from " + oldState + " to " + newState);
-        }
-
         private void SettingsChanged(object? sender, PropertyChangedEventArgs e)
         {
             RefreshState();
@@ -51,7 +54,7 @@ namespace ComputerWindDown.Models.State
 
         public void RefreshState()
         {
-            ChangeState(CreateState());
+            CurrentState = CreateState();
         }
 
         private WindDownState CreateState()
