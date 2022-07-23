@@ -18,16 +18,14 @@ namespace ComputerWindDown.Models.State.States
         {
             base.Activate(previousState);
 
-            IScheduler scheduler = StateManager.WindDown.Scheduler;
-            _ = EnabledStateSwitcher.ScheduleSwitch(scheduler, EndUtc);
+            _ = StateManager.EnabledStateSwitcher.ScheduleSwitch(EndUtc);
         }
 
         public override void Deactivate(WindDownState newState)
         {
             base.Deactivate(newState);
 
-            IScheduler scheduler = StateManager.WindDown.Scheduler;
-            _ = EnabledStateSwitcher.CancelSwitch(scheduler);
+            _ = StateManager.EnabledStateSwitcher.CancelSwitch();
         }
     }
 }

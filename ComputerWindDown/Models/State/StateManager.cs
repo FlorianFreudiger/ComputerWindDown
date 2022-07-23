@@ -3,12 +3,14 @@ using ComputerWindDown.Properties;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models.State
 {
     internal class StateManager
     {
         public readonly WindDown WindDown;
+        public readonly EnabledStateSwitcher EnabledStateSwitcher;
 
         public WindDownState CurrentState;
 
@@ -18,11 +20,13 @@ namespace ComputerWindDown.Models.State
             CurrentState = new StartupState(this);
 
             Settings.Default.PropertyChanged += SettingsChanged;
+
+            EnabledStateSwitcher = new EnabledStateSwitcher(this);
         }
 
-        public void Initialize()
+        public async Task Initialize()
         {
-            EnabledStateSwitcher.Setup(this);
+            await EnabledStateSwitcher.Initialize();
 
             // StartupState will switch to first real state
             Debug.Assert(CurrentState is StartupState);
