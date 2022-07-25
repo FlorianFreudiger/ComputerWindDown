@@ -12,7 +12,7 @@ namespace ComputerWindDown.Models.State.States
         {
             base.Activate(previousState);
 
-            StateManager.WindDown.ScreenEffect.SetActive(true);
+            StateManager.WindDown.ScreenEffectController.SetState(true);
         }
 
         public override void Deactivate(WindDownState newState)
@@ -21,7 +21,7 @@ namespace ComputerWindDown.Models.State.States
 
             if (newState is not ActiveState)
             {
-                StateManager.WindDown.ScreenEffect.SetActive(false);
+                StateManager.WindDown.ScreenEffectController.SetState(false);
             }
         }
     }

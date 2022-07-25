@@ -8,13 +8,13 @@ namespace ComputerWindDown.Models
     internal class WindDown
     {
         public readonly StateManager StateManager;
-        public readonly ScreenEffect ScreenEffect;
+        public readonly ScreenEffectController ScreenEffectController;
 
         public IActivitySchedule ActivitySchedule;
 
         public WindDown()
         {
-            ScreenEffect = new NvidiaDigitalVibranceReduction();
+            ScreenEffectController = new ScreenEffectController();
             StateManager = new StateManager(this);
             ActivitySchedule = new SimpleActivitySchedule();
         }
