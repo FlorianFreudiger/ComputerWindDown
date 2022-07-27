@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models.ScreenEffects
 {
@@ -20,24 +21,51 @@ namespace ComputerWindDown.Models.ScreenEffects
             get => _currentScreenEffect;
             set
             {
-                if (EffectState)
-                {
-                    SetState(false, true);
-                }
+                if (_currentScreenEffect == value) return;
 
+                ScreenEffect oldEffect = _currentScreenEffect;
                 _currentScreenEffect = value;
 
+                // Stop transition if active
+                _transitionActive = false;
+
                 if (EffectState)
                 {
-                    SetState(true, true);
+                    oldEffect.SetActive(false);
+                    _currentScreenEffect.SetActive(true);
                 }
             }
         }
 
-        public bool EffectState { get; private set; }
+        private bool _effectState;
+        public bool EffectState
+        {
+            get => _effectState;
+            set
+            {
+                if (_effectState == value) return;
+                _effectState = value;
+
+                if (CurrentScreenEffect.SupportsFractions())
+                {
+                    if (!_transitionActive)
+                    {
+                        _transitionActive = true;
+                        // Start asynchronous transition
+                        _ = Transition();
+                    }
+                }
+                else
+                {
+                    _currentScreenEffect.SetActive(_effectState);
+                }
+            }
+        }
 
         public ScreenEffectController()
         {
+            _effectState = false;
+
             ScreenEffect nvidiaScreenEffect = new NvidiaDigitalVibranceReduction();
 
             AllScreenEffects = new HashSet<ScreenEffect>
@@ -49,34 +77,22 @@ namespace ComputerWindDown.Models.ScreenEffects
             _currentScreenEffect = nvidiaScreenEffect;
         }
 
-        public void SetState(bool newState, bool skipTransition = false)
+        public void Reset()
         {
-            if (EffectState == newState) return;
-            EffectState = newState;
-
-            if (!skipTransition && CurrentScreenEffect.SupportsFractions())
-            {
-                if (!_transitionActive)
-                {
-                    _transitionActive = true;
-                    Transition();
-                }
-            }
-            else
-            {
-                _currentScreenEffect.SetActive(newState);
-            }
+            // Set effectState directly (instead of through property), skipping transition
+            _effectState = false;
+            CurrentScreenEffect.SetActive(false);
+            _transitionActive = false;
         }
 
-        private async void Transition()
+        private async Task Transition()
         {
-            PeriodicTimer periodic = new PeriodicTimer(TransitionTickTime);
+            using PeriodicTimer periodic = new PeriodicTimer(TransitionTickTime);
             double fraction = EffectState ? 0 : 1;
             while (await periodic.WaitForNextTickAsync())
             {
-                if ((EffectState && fraction >= 1.0) || (!EffectState && fraction <= 0.0))
+                if (!_transitionActive || (EffectState && fraction >= 1.0) || (!EffectState && fraction <= 0.0))
                 {
-                    periodic.Dispose();
                     _transitionActive = false;
                     break;
                 }
