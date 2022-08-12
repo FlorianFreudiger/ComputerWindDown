@@ -1,5 +1,5 @@
-﻿using ComputerWindDown.Properties;
-using System;
+﻿using System;
+using ComputerWindDown.Properties;
 
 namespace ComputerWindDown.Models.Time
 {

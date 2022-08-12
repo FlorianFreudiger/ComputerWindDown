@@ -1,9 +1,9 @@
-﻿using ComputerWindDown.Models.State.States;
-using ComputerWindDown.Properties;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using ComputerWindDown.Models.State.States;
+using ComputerWindDown.Properties;
 
 namespace ComputerWindDown.Models.State
 {

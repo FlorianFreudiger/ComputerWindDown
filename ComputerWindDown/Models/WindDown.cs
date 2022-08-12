@@ -1,7 +1,7 @@
-﻿using ComputerWindDown.Models.ScreenEffects;
+﻿using System.Threading.Tasks;
+using ComputerWindDown.Models.ScreenEffects;
 using ComputerWindDown.Models.State;
 using ComputerWindDown.Models.Time;
-using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models
 {

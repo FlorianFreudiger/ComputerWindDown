@@ -12,3 +12,10 @@ indent_size = 4
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
 insert_final_newline = true
+
+# .NET coding conventions
+dotnet_sort_system_directives_first = true
+
+# Keep default csproj format
+[*.csproj]
+indent_size = 2

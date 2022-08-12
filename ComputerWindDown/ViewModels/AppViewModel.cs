@@ -1,7 +1,7 @@
-﻿using Avalonia;
+﻿using System.Reactive;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
-using System.Reactive;
 
 namespace ComputerWindDown.ViewModels
 {

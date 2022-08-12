@@ -1,6 +1,6 @@
-﻿using ComputerWindDown.Properties;
+﻿using System;
+using ComputerWindDown.Properties;
 using ReactiveUI;
-using System;
 
 namespace ComputerWindDown.ViewModels
 {

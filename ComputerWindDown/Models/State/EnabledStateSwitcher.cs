@@ -1,12 +1,12 @@
-﻿using ComputerWindDown.Models.State.States;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using ComputerWindDown.Models.State.States;
 using Quartz;
 using Quartz.Impl;
 using Quartz.Impl.Matchers;
 using Quartz.Listener;
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ComputerWindDown.Models.State
 {
