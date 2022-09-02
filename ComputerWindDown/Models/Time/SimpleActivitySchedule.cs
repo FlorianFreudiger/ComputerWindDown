@@ -7,8 +7,8 @@ namespace ComputerWindDown.Models.Time
     {
         public DateTime GetNextSwitchTimeUtc()
         {
-            TimeSpan start = Settings.Default.TransitionStart;
-            TimeSpan end = Settings.Default.TransitionEnd;
+            TimeSpan start = Settings.Default.StartTime;
+            TimeSpan end = Settings.Default.EndTime;
             TimeSpan now = DateTime.Now.TimeOfDay;
 
             if (TimeHelper.IsTimeOfDayBetween(now, start, end))
@@ -23,8 +23,8 @@ namespace ComputerWindDown.Models.Time
 
         public bool IsActiveForTime(DateTime time, bool utc)
         {
-            TimeSpan start = Settings.Default.TransitionStart;
-            TimeSpan end = Settings.Default.TransitionEnd;
+            TimeSpan start = Settings.Default.StartTime;
+            TimeSpan end = Settings.Default.EndTime;
 
             if (utc)
             {

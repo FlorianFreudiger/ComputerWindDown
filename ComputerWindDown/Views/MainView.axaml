@@ -1,28 +1,31 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			 mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="400"
-			 x:Class="ComputerWindDown.Views.MainView">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ComputerWindDown.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="700" d:DesignHeight="400"
+             x:Class="ComputerWindDown.Views.MainView"
+             x:CompileBindings="True"
+             x:DataType="vm:MainViewModel">
 
     <Border Padding="50">
         <StackPanel HorizontalAlignment="Center" Spacing="30">
 
             <TextBlock HorizontalAlignment="Center">Apply screen effect in time period</TextBlock>
 
-            <ToggleSwitch IsChecked="{Binding Enable}" HorizontalAlignment="Center"/>
+            <ToggleSwitch IsChecked="{Binding Enable}" HorizontalAlignment="Center" />
 
             <StackPanel Orientation="Horizontal" Spacing="25">
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Center">Start</TextBlock>
-                    <TimePicker SelectedTime="{Binding TransitionStart}"/>
+                    <TimePicker SelectedTime="{Binding StartTime}" />
                 </StackPanel>
 
                 <TextBlock VerticalAlignment="Center">to</TextBlock>
 
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Center">End</TextBlock>
-                    <TimePicker SelectedTime="{Binding TransitionEnd}"/>
+                    <TimePicker SelectedTime="{Binding EndTime}" />
                 </StackPanel>
             </StackPanel>
 

@@ -13,27 +13,27 @@ namespace ComputerWindDown.ViewModels
             {
                 Settings.Default.Enable = value;
                 Settings.Default.Save();
-                this.RaisePropertyChanged(nameof(Enable));
+                this.RaisePropertyChanged();
             }
         }
-        public TimeSpan TransitionStart
+        public TimeSpan StartTime
         {
-            get => Settings.Default.TransitionStart;
+            get => Settings.Default.StartTime;
             set
             {
-                Settings.Default.TransitionStart = value;
+                Settings.Default.StartTime = value;
                 Settings.Default.Save();
-                this.RaisePropertyChanged(nameof(TransitionStart));
+                this.RaisePropertyChanged();
             }
         }
-        public TimeSpan TransitionEnd
+        public TimeSpan EndTime
         {
-            get => Settings.Default.TransitionEnd;
+            get => Settings.Default.EndTime;
             set
             {
-                Settings.Default.TransitionEnd = value;
+                Settings.Default.EndTime = value;
                 Settings.Default.Save();
-                this.RaisePropertyChanged(nameof(TransitionEnd));
+                this.RaisePropertyChanged();
             }
         }
     }

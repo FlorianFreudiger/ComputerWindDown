@@ -12,7 +12,7 @@ namespace ComputerWindDown.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.2.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -38,24 +38,24 @@ namespace ComputerWindDown.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("23:00:00")]
-        public global::System.TimeSpan TransitionStart {
+        public global::System.TimeSpan StartTime {
             get {
-                return ((global::System.TimeSpan)(this["TransitionStart"]));
+                return ((global::System.TimeSpan)(this["StartTime"]));
             }
             set {
-                this["TransitionStart"] = value;
+                this["StartTime"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("00:00:00")]
-        public global::System.TimeSpan TransitionEnd {
+        public global::System.TimeSpan EndTime {
             get {
-                return ((global::System.TimeSpan)(this["TransitionEnd"]));
+                return ((global::System.TimeSpan)(this["EndTime"]));
             }
             set {
-                this["TransitionEnd"] = value;
+                this["EndTime"] = value;
             }
         }
     }

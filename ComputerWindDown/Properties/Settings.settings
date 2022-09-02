@@ -5,10 +5,10 @@
     <Setting Name="Enable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="TransitionStart" Type="System.TimeSpan" Scope="User">
+    <Setting Name="StartTime" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">23:00:00</Value>
     </Setting>
-    <Setting Name="TransitionEnd" Type="System.TimeSpan" Scope="User">
+    <Setting Name="EndTime" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">00:00:00</Value>
     </Setting>
   </Settings>
