@@ -12,7 +12,7 @@ namespace ComputerWindDown
     {
         public App()
         {
-            DataContext = new AppViewModel();
+            DataContext = new AppViewModel(this);
         }
 
         public override void Initialize()
@@ -30,12 +30,12 @@ namespace ComputerWindDown
                 desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             }
 
-            CreateOrShowMainWindow();
+            ShowMainWindow();
 
             base.OnFrameworkInitializationCompleted();
         }
 
-        public static void CreateOrShowMainWindow()
+        public void ShowMainWindow()
         {
             if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
@@ -47,6 +47,14 @@ namespace ComputerWindDown
 
                 desktop.MainWindow.Show();
                 desktop.MainWindow.Activate();
+            }
+        }
+
+        public void Exit()
+        {
+            if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                desktop.TryShutdown();
             }
         }
     }

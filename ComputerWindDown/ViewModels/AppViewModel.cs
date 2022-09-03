@@ -1,6 +1,4 @@
 ﻿using System.Reactive;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 using ReactiveUI;
 
 namespace ComputerWindDown.ViewModels
@@ -9,25 +7,14 @@ namespace ComputerWindDown.ViewModels
     {
         public string Name => "Wind Down";
 
-        public AppViewModel()
+        public AppViewModel(App app)
         {
-            ExitCommand = ReactiveCommand.Create(Exit);
-            ShowCommand = ReactiveCommand.Create(Show);
+            ExitCommand = ReactiveCommand.Create(app.Exit);
+            ShowCommand = ReactiveCommand.Create(app.ShowMainWindow);
         }
 
         public ReactiveCommand<Unit, Unit> ExitCommand { get; }
-        public void Exit()
-        {
-            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime lifetime)
-            {
-                lifetime.TryShutdown();
-            }
-        }
 
         public ReactiveCommand<Unit, Unit> ShowCommand { get; }
-        public void Show()
-        {
-            App.CreateOrShowMainWindow();
-        }
     }
 }
