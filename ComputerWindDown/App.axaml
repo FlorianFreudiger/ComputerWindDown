@@ -19,9 +19,13 @@
             <TrayIcon Icon="/Assets/avalonia-logo.ico" Command="{Binding ShowCommand}" ToolTipText="{Binding Name}">
                 <TrayIcon.Menu>
                     <NativeMenu>
-                        <NativeMenuItem Header="Show" Command="{Binding ShowCommand}"/>
-                        <NativeMenuItemSeparator/>
-                        <NativeMenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+                        <NativeMenuItem Header="Show" Command="{Binding ShowCommand}" />
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="{Binding ToggleAutostartString}"
+                                        Command="{Binding ToggleAutostartCommand}"
+                                        IsEnabled="{Binding ToggleAutostartEnabled}"/>
+                        <NativeMenuItemSeparator />
+                        <NativeMenuItem Header="Exit" Command="{Binding ExitCommand}" />
                     </NativeMenu>
                 </TrayIcon.Menu>
             </TrayIcon>
