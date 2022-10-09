@@ -2,16 +2,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:ComputerWindDown"
              xmlns:vm="clr-namespace:ComputerWindDown.ViewModels"
+             xmlns:sty="using:FluentAvalonia.Styling"
              x:DataType="vm:AppViewModel"
              x:Class="ComputerWindDown.App"
              x:CompileBindings="True"
              Name="{Binding Name}">
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Styles>
-        <FluentTheme Mode="Dark"/>
+        <sty:FluentAvaloniaTheme />
     </Application.Styles>
 
     <TrayIcon.Icons>

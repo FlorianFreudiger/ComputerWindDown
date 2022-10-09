@@ -1,0 +1,24 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ComputerWindDown.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="250"
+             x:Class="ComputerWindDown.Views.Pages.ScreenEffectPage"
+             x:CompileBindings="True"
+             x:DataType="vm:MainViewModel">
+
+    <StackPanel Spacing="20" Margin="0,20,0,0">
+
+        <ToggleSwitch Margin="75,0,0,0" HorizontalAlignment="Center" IsChecked="{Binding Enable}" />
+        <TextBlock HorizontalAlignment="Center" Margin="30,0,30,0"
+                   TextAlignment="Center" FontWeight="Thin" TextWrapping="Wrap">
+            Note: Screen effect currently only supports displays connected to a NVIDIA GPU due to lacking API support from Intel and AMD.
+        </TextBlock>
+        <TextBlock HorizontalAlignment="Center" Margin="30,0,30,0"
+                   TextAlignment="Center" FontWeight="Thin" TextWrapping="Wrap">
+            Check in the NVIDIA Control Panel if there is a "Display" menu below "3D Settings". If it is missing, you might not be able to use this feature.
+        </TextBlock>
+
+    </StackPanel>
+</UserControl>

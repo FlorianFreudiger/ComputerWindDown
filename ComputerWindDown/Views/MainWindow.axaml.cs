@@ -1,8 +1,8 @@
-using Avalonia.Controls;
+using FluentAvalonia.UI.Controls;
 
 namespace ComputerWindDown.Views
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : CoreWindow
     {
         public MainWindow()
         {
