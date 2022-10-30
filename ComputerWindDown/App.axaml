@@ -23,8 +23,7 @@
                         <NativeMenuItem Header="Show" Command="{Binding ShowCommand}" />
                         <NativeMenuItemSeparator />
                         <NativeMenuItem Header="{Binding ToggleAutostartString}"
-                                        Command="{Binding ToggleAutostartCommand}"
-                                        IsEnabled="{Binding ToggleAutostartEnabled}"/>
+                                        Command="{Binding ToggleAutostartCommand}"/>
                         <NativeMenuItemSeparator />
                         <NativeMenuItem Header="Exit" Command="{Binding ExitCommand}" />
                     </NativeMenu>

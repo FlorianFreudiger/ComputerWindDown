@@ -1,0 +1,20 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:ComputerWindDown.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="430" d:DesignHeight="250"
+             x:Class="ComputerWindDown.Views.Pages.SettingsPage"
+             x:CompileBindings="True"
+             x:DataType="vm:MainViewModel">
+
+    <StackPanel Spacing="20" Margin="0,20,0,0">
+
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="30">
+            <TextBlock VerticalAlignment="Center">Start on login</TextBlock>
+            <ToggleSwitch IsChecked="{Binding AutostartInstance.RunAtStartup}"
+                          IsEnabled="{Binding AutostartInstance.IsAvailable}"/>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

@@ -1,4 +1,5 @@
 ﻿using System;
+using ComputerWindDown.Models;
 using ComputerWindDown.Properties;
 using ReactiveUI;
 
@@ -36,5 +37,7 @@ namespace ComputerWindDown.ViewModels
                 this.RaisePropertyChanged();
             }
         }
+
+        public Autostart AutostartInstance => Autostart.Instance;
     }
 }

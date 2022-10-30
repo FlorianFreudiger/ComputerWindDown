@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using StartupHelper;
 
 namespace ComputerWindDown.Models;
 
-public sealed class Autostart
+public sealed class Autostart : INotifyPropertyChanged
 {
     // TODO?: Thread-safe Singleton, if necessary
     public static readonly Autostart Instance = new();
@@ -29,6 +31,7 @@ public sealed class Autostart
             {
                 startupManager.Unregister();
             }
+            OnPropertyChanged();
         }
     }
 
@@ -64,5 +67,12 @@ public sealed class Autostart
         }
 
         return null;
+    }
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

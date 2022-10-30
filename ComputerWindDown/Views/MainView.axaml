@@ -10,7 +10,7 @@
              x:CompileBindings="True"
              x:DataType="vm:MainViewModel">
 
-    <ui:NavigationView x:Name="NavigationView" PaneDisplayMode="Auto" OpenPaneLength="170" IsSettingsVisible="False"
+    <ui:NavigationView x:Name="NavigationView" PaneDisplayMode="Auto" OpenPaneLength="170"
                        CompactModeThresholdWidth="0" ExpandedModeThresholdWidth="500">
         <ui:NavigationView.HeaderTemplate>
             <DataTemplate DataType="{x:Type system:String}">

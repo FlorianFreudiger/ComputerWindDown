@@ -21,13 +21,21 @@ namespace ComputerWindDown.Views
 
         private void NavigationView_SelectionChanged(object? sender, NavigationViewSelectionChangedEventArgs e)
         {
-            NavigationView.Content = e.SelectedItemContainer.Tag switch
+            if (e.IsSettingsSelected)
             {
-                "time" => new TimePage(),
-                "screen-effect" => new ScreenEffectPage(),
-                _ => throw new ArgumentException("Unknown tag")
-            };
-            NavigationView.Header = e.SelectedItemContainer.Content;
+                NavigationView.Content = new SettingsPage();
+                NavigationView.Header = "Settings";
+            }
+            else
+            {
+                NavigationView.Content = e.SelectedItemContainer.Tag switch
+                {
+                    "time" => new TimePage(),
+                    "screen-effect" => new ScreenEffectPage(),
+                    _ => throw new ArgumentException("Unknown tag")
+                };
+                NavigationView.Header = e.SelectedItemContainer.Content;
+            }
         }
     }
 }
