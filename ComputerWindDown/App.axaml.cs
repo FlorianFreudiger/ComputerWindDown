@@ -30,7 +30,7 @@ namespace ComputerWindDown
                 desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             }
 
-            if (!Autostart.WasAutoStarted)
+            if (!Autostart.Instance.WasAutoStarted)
             {
                 ShowMainWindow();
             }

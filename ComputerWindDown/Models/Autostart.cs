@@ -4,18 +4,21 @@ using StartupHelper;
 
 namespace ComputerWindDown.Models;
 
-public static class Autostart
+public sealed class Autostart
 {
-    private static readonly StartupManager? StartupManager;
+    // TODO?: Thread-safe Singleton, if necessary
+    public static readonly Autostart Instance = new();
 
-    public static bool IsAvailable => StartupManager != null;
+    private readonly StartupManager? _startupManager;
 
-    public static bool RunAtStartup
+    public bool IsAvailable => _startupManager != null;
+
+    public bool RunAtStartup
     {
-        get => StartupManager?.IsRegistered ?? false;
+        get => _startupManager?.IsRegistered ?? false;
         set
         {
-            var startupManager = StartupManager ?? throw new InvalidOperationException("Autostart is not available");
+            var startupManager = _startupManager ?? throw new InvalidOperationException("Autostart is not available");
 
             if (value == startupManager.IsRegistered) return;
             if (value)
@@ -29,15 +32,15 @@ public static class Autostart
         }
     }
 
-    public static bool WasAutoStarted => StartupManager?.IsStartedUp ?? false;
+    public bool WasAutoStarted => _startupManager?.IsStartedUp ?? false;
 
-    static Autostart()
+    private Autostart()
     {
         string? path = FindExecutablePath();
 
         if (path != null)
         {
-            StartupManager = new StartupManager(path, nameof(ComputerWindDown), RegistrationScope.Local, false);
+            _startupManager = new StartupManager(path, nameof(ComputerWindDown), RegistrationScope.Local, false);
         }
     }
 

@@ -21,13 +21,13 @@ namespace ComputerWindDown.ViewModels
 
         public ReactiveCommand<Unit, Unit> ToggleAutostartCommand { get; }
 
-        public string ToggleAutostartString => Autostart.RunAtStartup ? "Do not run at startup" : "Run at startup";
+        public string ToggleAutostartString => Autostart.Instance.RunAtStartup ? "Do not run at startup" : "Run at startup";
 
-        public bool ToggleAutostartEnabled => Autostart.IsAvailable;
+        public bool ToggleAutostartEnabled => Autostart.Instance.IsAvailable;
 
         private void ToggleAutostart()
         {
-            Autostart.RunAtStartup = !Autostart.RunAtStartup;
+            Autostart.Instance.RunAtStartup = !Autostart.Instance.RunAtStartup;
             this.RaisePropertyChanged(nameof(ToggleAutostartString));
         }
     }
