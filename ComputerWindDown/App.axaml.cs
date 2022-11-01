@@ -45,7 +45,10 @@ namespace ComputerWindDown
                 // Check if MainWindow hasn't been created or is closed
                 if (desktop.MainWindow?.PlatformImpl == null)
                 {
-                    desktop.MainWindow = new MainWindow();
+                    desktop.MainWindow = new MainWindow
+                    {
+                        DataContext = DataContext
+                    };
                 }
 
                 desktop.MainWindow.Show();
