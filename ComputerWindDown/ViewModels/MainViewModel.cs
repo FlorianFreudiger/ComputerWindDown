@@ -38,6 +38,17 @@ namespace ComputerWindDown.ViewModels
             }
         }
 
+        public bool MinimizeToTray
+        {
+            get => Settings.Default.MinimizeToTray;
+            set
+            {
+                Settings.Default.MinimizeToTray = value;
+                Settings.Default.Save();
+                this.RaisePropertyChanged();
+            }
+        }
+
         public Autostart AutostartInstance => Autostart.Instance;
     }
 }

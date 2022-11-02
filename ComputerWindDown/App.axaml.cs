@@ -1,10 +1,14 @@
+using System;
+using System.Reactive.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using ComputerWindDown.Models;
+using ComputerWindDown.Properties;
 using ComputerWindDown.ViewModels;
 using ComputerWindDown.Views;
+using ReactiveUI;
 
 namespace ComputerWindDown
 {
@@ -27,7 +31,9 @@ namespace ComputerWindDown
                 WindDown windDown = new WindDown();
                 _ = windDown.Initialize();
 
-                desktop.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+                Settings.Default.WhenAnyValue(x => x.MinimizeToTray)
+                    .Select(x => x ? ShutdownMode.OnExplicitShutdown : ShutdownMode.OnLastWindowClose)
+                    .Subscribe(x => desktop.ShutdownMode = x);
             }
 
             if (!Autostart.Instance.WasAutoStarted)
