@@ -1,4 +1,5 @@
-using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Avalonia.Controls;
 using ComputerWindDown.ViewModels;
 using ComputerWindDown.Views.Pages;
@@ -9,6 +10,13 @@ namespace ComputerWindDown.Views
 {
     public partial class MainView : UserControl
     {
+        private readonly Dictionary<string, UserControl> _pages = new()
+        {
+            { "time", new TimePage() },
+            { "screen-effect", new ScreenEffectPage() },
+            { "settings", new SettingsPage() }
+        };
+
         public MainView()
         {
             InitializeComponent();
@@ -23,18 +31,16 @@ namespace ComputerWindDown.Views
         {
             if (e.IsSettingsSelected)
             {
-                NavigationView.Content = new SettingsPage();
                 NavigationView.Header = "Settings";
+                NavigationView.Content = _pages["settings"];
             }
             else
             {
-                NavigationView.Content = e.SelectedItemContainer.Tag switch
-                {
-                    "time" => new TimePage(),
-                    "screen-effect" => new ScreenEffectPage(),
-                    _ => throw new ArgumentException("Unknown tag")
-                };
                 NavigationView.Header = e.SelectedItemContainer.Content;
+
+                var tag = e.SelectedItemContainer.Tag as string;
+                Debug.Assert(tag != null);
+                NavigationView.Content = _pages[tag];
             }
         }
     }
