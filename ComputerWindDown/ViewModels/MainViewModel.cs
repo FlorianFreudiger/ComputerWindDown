@@ -1,54 +1,42 @@
 ﻿using System;
+using CommunityToolkit.Mvvm.ComponentModel;
 using ComputerWindDown.Models;
 using ComputerWindDown.Properties;
-using ReactiveUI;
 
 namespace ComputerWindDown.ViewModels;
 
-public class MainViewModel : ViewModelBase
+public partial class MainViewModel : ViewModelBase
 {
-    public bool Enable
+    [ObservableProperty] private bool _enable = Settings.Default.Enable;
+
+    partial void OnEnableChanged(bool value)
     {
-        get => Settings.Default.Enable;
-        set
-        {
-            Settings.Default.Enable = value;
-            Settings.Default.Save();
-            this.RaisePropertyChanged();
-        }
+        Settings.Default.Enable = value;
+        Settings.Default.Save();
     }
 
-    public TimeSpan StartTime
+    [ObservableProperty] private TimeSpan _startTime = Settings.Default.StartTime;
+
+    partial void OnStartTimeChanged(TimeSpan value)
     {
-        get => Settings.Default.StartTime;
-        set
-        {
-            Settings.Default.StartTime = value;
-            Settings.Default.Save();
-            this.RaisePropertyChanged();
-        }
+        Settings.Default.StartTime = value;
+        Settings.Default.Save();
     }
 
-    public TimeSpan EndTime
+    [ObservableProperty] private TimeSpan _endTime = Settings.Default.EndTime;
+
+    partial void OnEndTimeChanged(TimeSpan value)
     {
-        get => Settings.Default.EndTime;
-        set
-        {
-            Settings.Default.EndTime = value;
-            Settings.Default.Save();
-            this.RaisePropertyChanged();
-        }
+        Settings.Default.EndTime = value;
+        Settings.Default.Save();
     }
 
-    public bool MinimizeToTray
+    [ObservableProperty] private bool _minimizeToTray = Settings.Default.MinimizeToTray;
+
+    partial void OnMinimizeToTrayChanged(bool value)
     {
-        get => Settings.Default.MinimizeToTray;
-        set
-        {
-            Settings.Default.MinimizeToTray = value;
-            Settings.Default.Save();
-            this.RaisePropertyChanged();
-        }
+        Settings.Default.MinimizeToTray = value;
+        Settings.Default.Save();
     }
 
     public Autostart AutostartInstance => Autostart.Instance;

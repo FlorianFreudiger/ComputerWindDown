@@ -1,41 +1,39 @@
-﻿using System.Reactive;
-using System.Reactive.Linq;
+﻿using CommunityToolkit.Mvvm.Input;
 using ComputerWindDown.Models;
-using ReactiveUI;
 
 namespace ComputerWindDown.ViewModels;
 
-internal class AppViewModel : ViewModelBase
+internal partial class AppViewModel : ViewModelBase
 {
-    public string Name => "Wind Down";
+    private readonly App _app;
 
     public AppViewModel(App app)
     {
-        // Create simple exit and show window commands
-        ExitCommand = ReactiveCommand.Create(app.Exit);
-        ShowCommand = ReactiveCommand.Create(app.ShowMainWindow);
+        _app = app;
 
-        // Create toggle auto-start command and bind canExecute to IsAvailable to disable the menu item if it is not available
-        var canToggleAutostart = Autostart.Instance.WhenAnyValue(autostart => autostart.IsAvailable);
-        ToggleAutostartCommand = ReactiveCommand.Create(ToggleAutostart, canToggleAutostart);
-
-        // Create string property label for the toggle auto-start menu item
-        Autostart.Instance.WhenAnyValue(autostart => autostart.RunAtStartup)
-            .Select(runAtStartup => runAtStartup ? "Do not run at startup" : "Run at startup")
-            .ToProperty(this, appViewModel => appViewModel.ToggleAutostartString, out _toggleAutostartString);
+        // Update the string inside the tray menu when the autostart property changes
+        Autostart.Instance.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(Autostart.Instance.RunAtStartup))
+            {
+                OnPropertyChanged(nameof(ToggleAutostartString));
+            }
+        };
     }
 
-    public ReactiveCommand<Unit, Unit> ExitCommand { get; }
+    // Cannot be static to allow for data binding
+    public string Name => "Wind Down";
 
-    public ReactiveCommand<Unit, Unit> ShowCommand { get; }
+    public string ToggleAutostartString => Autostart.Instance.RunAtStartup ? "Do not run at startup" : "Run at startup";
 
-    public ReactiveCommand<Unit, Unit> ToggleAutostartCommand { get; }
+    [RelayCommand]
+    private void ExitApp() => _app.Exit();
 
-    private readonly ObservableAsPropertyHelper<string> _toggleAutostartString;
-    public string ToggleAutostartString => _toggleAutostartString.Value;
+    [RelayCommand]
+    private void ShowApp() => _app.ShowMainWindow();
 
-    private void ToggleAutostart()
-    {
-        Autostart.Instance.RunAtStartup = !Autostart.Instance.RunAtStartup;
-    }
+    [RelayCommand(CanExecute = nameof(CanToggleAutostart))]
+    private void ToggleAutostart() => Autostart.Instance.RunAtStartup = !Autostart.Instance.RunAtStartup;
+
+    private static bool CanToggleAutostart() => Autostart.Instance.IsAvailable;
 }

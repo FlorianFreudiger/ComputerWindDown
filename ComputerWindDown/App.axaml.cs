@@ -1,6 +1,4 @@
-using System;
 using System.Diagnostics;
-using System.Reactive.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -9,11 +7,10 @@ using ComputerWindDown.Models;
 using ComputerWindDown.Properties;
 using ComputerWindDown.ViewModels;
 using ComputerWindDown.Views;
-using ReactiveUI;
 
 namespace ComputerWindDown;
 
-public partial class App : Application
+public class App : Application
 {
     private WindDown? _windDown;
 
@@ -34,9 +31,20 @@ public partial class App : Application
             _windDown = new WindDown();
             _ = _windDown.Initialize();
 
-            Settings.Default.WhenAnyValue(x => x.MinimizeToTray)
-                .Select(x => x ? ShutdownMode.OnExplicitShutdown : ShutdownMode.OnLastWindowClose)
-                .Subscribe(x => desktop.ShutdownMode = x);
+
+            void UpdateShutdownMode() => desktop.ShutdownMode = Settings.Default.MinimizeToTray
+                ? ShutdownMode.OnExplicitShutdown
+                : ShutdownMode.OnLastWindowClose;
+
+            // Update now and subscribe to future changes
+            UpdateShutdownMode();
+            Settings.Default.PropertyChanged += (_, args) =>
+            {
+                if (args.PropertyName == nameof(Settings.Default.MinimizeToTray))
+                {
+                    UpdateShutdownMode();
+                }
+            };
 
             desktop.ShutdownRequested += ShutdownRequested;
         }
@@ -67,7 +75,7 @@ public partial class App : Application
             {
                 desktop.MainWindow = new MainWindow
                 {
-                    DataContext = DataContext
+                    DataContext = DataContext,
                 };
             }
 
