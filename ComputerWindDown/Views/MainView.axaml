@@ -19,8 +19,8 @@
             </DataTemplate>
         </ui:NavigationView.HeaderTemplate>
         <ui:NavigationView.MenuItems>
-            <ui:NavigationViewItem Content="Time" Tag="time" Icon="Clock" />
-            <ui:NavigationViewItem Content="Screen Effect" Tag="screen-effect" Icon="ColorBackground" />
+            <ui:NavigationViewItem Content="Time" Tag="time" IconSource="Clock" />
+            <ui:NavigationViewItem Content="Screen Effect" Tag="screen-effect" IconSource="ColorBackground" />
         </ui:NavigationView.MenuItems>
     </ui:NavigationView>
 </UserControl>

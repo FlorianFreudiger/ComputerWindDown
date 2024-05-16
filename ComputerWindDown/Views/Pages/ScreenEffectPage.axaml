@@ -10,7 +10,7 @@
 
     <StackPanel Spacing="20" Margin="0,20,0,0">
 
-        <ToggleSwitch Margin="75,0,0,0" HorizontalAlignment="Center" IsChecked="{Binding Enable}" />
+        <ToggleSwitch HorizontalAlignment="Center" IsChecked="{Binding Enable}" />
         <TextBlock HorizontalAlignment="Center" Margin="30,0,30,0"
                    TextAlignment="Center" FontWeight="Thin" TextWrapping="Wrap">
             Note: Screen effect currently only supports displays connected to a NVIDIA GPU due to lacking API support from Intel and AMD.
