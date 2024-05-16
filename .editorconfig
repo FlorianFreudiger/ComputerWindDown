@@ -3,26 +3,32 @@ root = true
 
 # All files
 [*]
+charset = utf-8
 indent_style = space
 insert_final_newline = true
 
 # ReSharper properties
 resharper_space_before_self_closing = true
+resharper_trailing_comma_in_multiline_lists = true
+
+csharp_style_namespace_declarations = file_scoped
+resharper_namespace_body = file_scoped
 
 # Xml,Xaml,Axaml files
 [*.{xml,xaml,axaml}]
 indent_size = 4
 
-# Code files
+# C# and VB code files
 [*.{cs,csx,vb,vbx}]
 indent_size = 4
 
 # .NET coding conventions
 dotnet_sort_system_directives_first = true
 
-# Keep default auto-generated csproj format
-[*.csproj]
+# Keep default auto-generated csproj and manifest format
+[*.{csproj,manifest}]
 indent_size = 2
+max_line_length = 240
 
 # Keep default auto-generated settings format
 [*.settings]

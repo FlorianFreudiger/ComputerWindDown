@@ -9,4 +9,3 @@ public partial class SettingsPage : UserControl
         InitializeComponent();
     }
 }
-

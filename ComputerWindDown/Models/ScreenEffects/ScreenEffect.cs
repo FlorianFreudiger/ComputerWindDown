@@ -1,41 +1,40 @@
 ﻿using System;
 
-namespace ComputerWindDown.Models.ScreenEffects
+namespace ComputerWindDown.Models.ScreenEffects;
+
+internal abstract class ScreenEffect
 {
-    internal abstract class ScreenEffect
+    public virtual bool IsAvailable()
     {
-        public virtual bool IsAvailable()
-        {
-            return true;
-        }
+        return true;
+    }
 
-        public virtual void SetActive(bool active)
+    public virtual void SetActive(bool active)
+    {
+        if (SupportsFractions())
         {
-            if (SupportsFractions())
-            {
-                SetFraction(active ? 1.0 : 0.0);
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            SetFraction(active ? 1.0 : 0.0);
         }
-
-        public virtual bool SupportsFractions()
+        else
         {
-            return false;
+            throw new NotImplementedException();
         }
+    }
 
-        public virtual void SetFraction(double fraction)
+    public virtual bool SupportsFractions()
+    {
+        return false;
+    }
+
+    public virtual void SetFraction(double fraction)
+    {
+        if (SupportsFractions())
         {
-            if (SupportsFractions())
-            {
-                throw new NotImplementedException();
-            }
-            else
-            {
-                throw new NotSupportedException();
-            }
+            throw new NotImplementedException();
+        }
+        else
+        {
+            throw new NotSupportedException();
         }
     }
 }

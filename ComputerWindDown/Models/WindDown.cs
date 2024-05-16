@@ -5,46 +5,45 @@ using ComputerWindDown.Models.ScreenEffects;
 using ComputerWindDown.Properties;
 using Quartz.Impl;
 
-namespace ComputerWindDown.Models
+namespace ComputerWindDown.Models;
+
+internal class WindDown
 {
-    internal class WindDown
+    public readonly ScreenEffectController ScreenEffectController;
+    public readonly ScreenEffectJobsDirector ScreenEffectJobsDirector;
+
+    public WindDown()
     {
-        public readonly ScreenEffectController ScreenEffectController;
-        public readonly ScreenEffectJobsDirector ScreenEffectJobsDirector;
+        ScreenEffectController = new ScreenEffectController();
+        ScreenEffectJobsDirector = new ScreenEffectJobsDirector(ScreenEffectController);
 
-        public WindDown()
+        Settings.Default.PropertyChanged += SettingsChanged;
+    }
+
+    private void SettingsChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        _ = Update();
+    }
+
+    public async Task Initialize()
+    {
+        // Start the default scheduler (if not started already)
+        var scheduler = await StdSchedulerFactory.GetDefaultScheduler();
+        await scheduler.Start();
+
+        await Update();
+    }
+
+    private async Task Update()
+    {
+        if (Settings.Default.Enable)
         {
-            ScreenEffectController = new ScreenEffectController();
-            ScreenEffectJobsDirector = new ScreenEffectJobsDirector(ScreenEffectController);
-
-            Settings.Default.PropertyChanged += SettingsChanged;
+            await ScreenEffectJobsDirector.Restart();
         }
-
-        private void SettingsChanged(object? sender, PropertyChangedEventArgs e)
+        else
         {
-            _ = Update();
-        }
-
-        public async Task Initialize()
-        {
-            // Start the default scheduler (if not started already)
-            var scheduler = await StdSchedulerFactory.GetDefaultScheduler();
-            await scheduler.Start();
-
-            await Update();
-        }
-
-        private async Task Update()
-        {
-            if (Settings.Default.Enable)
-            {
-                await ScreenEffectJobsDirector.Restart();
-            }
-            else
-            {
-                await ScreenEffectJobsDirector.Stop();
-                ScreenEffectController.Reset();
-            }
+            await ScreenEffectJobsDirector.Stop();
+            ScreenEffectController.Reset();
         }
     }
 }

@@ -1,8 +1,7 @@
 using ReactiveUI;
 
-namespace ComputerWindDown.ViewModels
+namespace ComputerWindDown.ViewModels;
+
+public class ViewModelBase : ReactiveObject
 {
-    public class ViewModelBase : ReactiveObject
-    {
-    }
 }

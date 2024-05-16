@@ -11,77 +11,76 @@ using ComputerWindDown.ViewModels;
 using ComputerWindDown.Views;
 using ReactiveUI;
 
-namespace ComputerWindDown
+namespace ComputerWindDown;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private WindDown? _windDown;
+
+    public App()
     {
-        private WindDown? _windDown;
+        DataContext = new AppViewModel(this);
+    }
 
-        public App()
+    public override void Initialize()
+    {
+        AvaloniaXamlLoader.Load(this);
+    }
+
+    public override void OnFrameworkInitializationCompleted()
+    {
+        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            DataContext = new AppViewModel(this);
+            _windDown = new WindDown();
+            _ = _windDown.Initialize();
+
+            Settings.Default.WhenAnyValue(x => x.MinimizeToTray)
+                .Select(x => x ? ShutdownMode.OnExplicitShutdown : ShutdownMode.OnLastWindowClose)
+                .Subscribe(x => desktop.ShutdownMode = x);
+
+            desktop.ShutdownRequested += ShutdownRequested;
         }
 
-        public override void Initialize()
+        if (!Autostart.Instance.WasAutoStarted)
         {
-            AvaloniaXamlLoader.Load(this);
+            ShowMainWindow();
         }
 
-        public override void OnFrameworkInitializationCompleted()
+        base.OnFrameworkInitializationCompleted();
+    }
+
+    private void ShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
+    {
+        Debug.Assert(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime);
+
+        Debug.Assert(_windDown != null);
+        _ = _windDown.ScreenEffectJobsDirector.Stop();
+        _windDown.ScreenEffectController.Reset();
+    }
+
+    public void ShowMainWindow()
+    {
+        if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            // Check if MainWindow hasn't been created or is closed
+            if (desktop.MainWindow?.PlatformImpl == null)
             {
-                _windDown = new WindDown();
-                _ = _windDown.Initialize();
-
-                Settings.Default.WhenAnyValue(x => x.MinimizeToTray)
-                    .Select(x => x ? ShutdownMode.OnExplicitShutdown : ShutdownMode.OnLastWindowClose)
-                    .Subscribe(x => desktop.ShutdownMode = x);
-
-                desktop.ShutdownRequested += ShutdownRequested;
-            }
-
-            if (!Autostart.Instance.WasAutoStarted)
-            {
-                ShowMainWindow();
-            }
-
-            base.OnFrameworkInitializationCompleted();
-        }
-
-        private void ShutdownRequested(object? sender, ShutdownRequestedEventArgs e)
-        {
-            Debug.Assert(ApplicationLifetime is IClassicDesktopStyleApplicationLifetime);
-
-            Debug.Assert(_windDown != null);
-            _ = _windDown.ScreenEffectJobsDirector.Stop();
-            _windDown.ScreenEffectController.Reset();
-        }
-
-        public void ShowMainWindow()
-        {
-            if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                // Check if MainWindow hasn't been created or is closed
-                if (desktop.MainWindow?.PlatformImpl == null)
+                desktop.MainWindow = new MainWindow
                 {
-                    desktop.MainWindow = new MainWindow
-                    {
-                        DataContext = DataContext
-                    };
-                }
-
-                desktop.MainWindow.Show();
-                desktop.MainWindow.Activate();
+                    DataContext = DataContext
+                };
             }
+
+            desktop.MainWindow.Show();
+            desktop.MainWindow.Activate();
         }
+    }
 
-        public void Exit()
+    public void Exit()
+    {
+        if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            if (Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            {
-                desktop.TryShutdown();
-            }
+            desktop.TryShutdown();
         }
     }
 }

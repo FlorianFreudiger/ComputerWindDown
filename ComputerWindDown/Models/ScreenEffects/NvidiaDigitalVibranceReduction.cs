@@ -1,26 +1,25 @@
 ﻿using NvAPIWrapper.Display;
 
-namespace ComputerWindDown.Models.ScreenEffects
+namespace ComputerWindDown.Models.ScreenEffects;
+
+internal class NvidiaDigitalVibranceReduction : ScreenEffect
 {
-    internal class NvidiaDigitalVibranceReduction : ScreenEffect
+    public NvidiaDigitalVibranceReduction()
     {
-        public NvidiaDigitalVibranceReduction()
-        {
-            NvAPIWrapper.NVIDIA.Initialize();
-        }
+        NvAPIWrapper.NVIDIA.Initialize();
+    }
 
-        public override bool SupportsFractions()
-        {
-            return true;
-        }
+    public override bool SupportsFractions()
+    {
+        return true;
+    }
 
-        public override void SetFraction(double fraction)
+    public override void SetFraction(double fraction)
+    {
+        var displays = Display.GetDisplays();
+        foreach (Display display in displays)
         {
-            var displays = Display.GetDisplays();
-            foreach (Display display in displays)
-            {
-                display.DigitalVibranceControl.NormalizedLevel = -fraction;
-            }
+            display.DigitalVibranceControl.NormalizedLevel = -fraction;
         }
     }
 }
